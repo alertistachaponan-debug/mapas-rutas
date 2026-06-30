@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta BZH811 — 49 paradas</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, Roboto, Arial, sans-serif; }
+  body { display:flex; flex-direction:column; height:100vh; }
+  header {
+    background:#1a73e8; color:#fff; padding:14px 18px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;
+  }
+  header h1 { font-size:17px; font-weight:600; }
+  header span { font-size:13px; opacity:0.9; }
+  #container { display:flex; flex:1; min-height:0; }
+  #map { flex:1; min-width:0; }
+  #sidebar {
+    width:340px; max-width:40vw; overflow-y:auto; background:#fafafa;
+    border-left:1px solid #e0e0e0;
+  }
+  .parada {
+    display:flex; align-items:center; gap:10px; padding:12px 14px;
+    border-bottom:1px solid #eee; cursor:pointer; transition:background .15s;
+  }
+  .parada:hover { background:#eef3ff; }
+  .num-badge {
+    width:28px; height:28px; border-radius:50%; background:#1a73e8; color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;
+    flex-shrink:0;
+  }
+  .parada-info { flex:1; display:flex; flex-direction:column; min-width:0; }
+  .parada-info strong { font-size:13.5px; color:#202124; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .parada-info span { font-size:12px; color:#5f6368; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .btn-ir {
+    background:#1a73e8; color:#fff; text-decoration:none; font-size:12px;
+    padding:6px 10px; border-radius:5px; flex-shrink:0; font-weight:600;
+  }
+  @media (max-width: 700px) {
+    #container { flex-direction:column; }
+    #sidebar { width:100%; max-width:100%; max-height:35vh; }
+    #map { flex:1; min-height:40vh; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚚 Ruta — Placa BZH811</h1>
+  <span>49 paradas · Gestor: V73</span>
+</header>
+
+<div id="container">
+  <div id="map"></div>
+  <div id="sidebar">
+        <div class="parada" onclick="centrarEnParada(0)">
+          <div class="num-badge">1</div>
+          <div class="parada-info">
+            <strong>ROJAS CASTRO ROSA ELVIRA</strong>
+            <span>JR LAS DRUSAS 298 URB LAS FLORES 78 SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.001036,-77.006392" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(1)">
+          <div class="num-badge">2</div>
+          <div class="parada-info">
+            <strong>FABIAN ANDRES CARMELITA</strong>
+            <span>URB SAN HILARION 2DA ETP JR AMATIST SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.999983,-77.008317" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(2)">
+          <div class="num-badge">3</div>
+          <div class="parada-info">
+            <strong>COLONIA DIAZ EBER PAULINO</strong>
+            <span>JR LAS PERLAS 2000 URB LAS VIOLETAS SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.998353,-77.008" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(3)">
+          <div class="num-badge">4</div>
+          <div class="parada-info">
+            <strong>VILA CONDEMAYTA JENY</strong>
+            <span>JR LOS RUBIES 1746 URB LAS FLORES SAN JU, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.0029,-77.003596" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(4)">
+          <div class="num-badge">5</div>
+          <div class="parada-info">
+            <strong>AROMA DEL PAN S.A.C.</strong>
+            <span>AV 13 DE ENERO 1793 SAN JUAN DE LURIGANC, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.002012,-77.003807" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(5)">
+          <div class="num-badge">6</div>
+          <div class="parada-info">
+            <strong>DIAZ RUBIO CESAR</strong>
+            <span>AV 13 DE ENERO 1774 SAN JUAN DE LUR SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.002179,-77.003328" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(6)">
+          <div class="num-badge">7</div>
+          <div class="parada-info">
+            <strong>SANTOS CARDENAS ELIZABETH NANCY</strong>
+            <span>PTO 62 MDO MANCO INCA SAN JUAN DE L SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.999675,-77.002359" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(7)">
+          <div class="num-badge">8</div>
+          <div class="parada-info">
+            <strong>HUALLPA GUTIERREZ YANET</strong>
+            <span>CL LAS BLENDAS 462 URB INCA MANCO C SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.998398,-77.003949" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(8)">
+          <div class="num-badge">9</div>
+          <div class="parada-info">
+            <strong>DE LA CRUZ GRADOS OLGA ESTHER</strong>
+            <span>LAS BLENDAS 429 INCA MANCO CAPAC SA SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.998221,-77.004645" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(9)">
+          <div class="num-badge">10</div>
+          <div class="parada-info">
+            <strong>QUICHUA QUISPE JANETH ROCIO</strong>
+            <span>JR EL TERRAZO 1936 ASOC MANCO CAPAC SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.999664,-77.00436" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(10)">
+          <div class="num-badge">11</div>
+          <div class="parada-info">
+            <strong>ALTEZ ROJAS MIRIAM</strong>
+            <span>AV 13 DE ENERO 1704 URBINCA MANCO C SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.003583,-77.0025" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(11)">
+          <div class="num-badge">12</div>
+          <div class="parada-info">
+            <strong>PAULINO CUBA ROSA BERTHA</strong>
+            <span>JR LOS TERRAZOS 1786 URB INCA MANCO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.001638,-77.003035" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(12)">
+          <div class="num-badge">13</div>
+          <div class="parada-info">
+            <strong>REYES BOBADILLA MANUEL</strong>
+            <span>JR LOS TERRAZOS 1733 URB INCA MANCO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.002579,-77.002601" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(13)">
+          <div class="num-badge">14</div>
+          <div class="parada-info">
+            <strong>HUARI CENTENO VALERIO CRISANTO</strong>
+            <span>CA LOS MINERALES 499 SAN JUAN DE LURIGAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.00108,-77.002617" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(14)">
+          <div class="num-badge">15</div>
+          <div class="parada-info">
+            <strong>RAMIREZ NAVARRO MIRIAN ROSA</strong>
+            <span>JR MARMOL 479 INCA MANCO CAPAC I ET SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.000786,-77.003081" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(15)">
+          <div class="num-badge">16</div>
+          <div class="parada-info">
+            <strong>HUALLPARIMACHI CJUMO JACQUELINE</strong>
+            <span>JR AMATISTAS 557 SAN JUAN DE LURIGANCHO, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.998709,-77.002951" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(16)">
+          <div class="num-badge">17</div>
+          <div class="parada-info">
+            <strong>GONZALES QUINONES JANET MABEL</strong>
+            <span>JR LA BLENDAS 461 URB INCA MANCO CA SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.998225,-77.003949" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(17)">
+          <div class="num-badge">18</div>
+          <div class="parada-info">
+            <strong>PANDO TORRES YESSICA RUTH</strong>
+            <span>JR LAS TURQUESAS 449 URB INCA MANCO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.997772,-77.004149" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(18)">
+          <div class="num-badge">19</div>
+          <div class="parada-info">
+            <strong>INVERSIONES HNOS QUINO S.A.C.</strong>
+            <span>JR LOS GRAFITOS 281 SAN JUAN DE LUR SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.997049,-77.006596" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(19)">
+          <div class="num-badge">20</div>
+          <div class="parada-info">
+            <strong>ULLOA GUERRA MISHEL ALEXANDRA</strong>
+            <span>JR LOS GRAFITOS 274 URB SAN HILARIO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.997199,-77.006788" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(20)">
+          <div class="num-badge">21</div>
+          <div class="parada-info">
+            <strong>ROJAS OSPINO LINDA JOCAVED</strong>
+            <span>AV LOS POSTES ESTE 164 URB SAN HILA SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.997025,-77.008336" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(21)">
+          <div class="num-badge">22</div>
+          <div class="parada-info">
+            <strong>MONTALVO VILLACA NANCY KARINA</strong>
+            <span>JR LOS ZAFIROS 2023 URB SAN HILARIO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.999407,-77.0082" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(22)">
+          <div class="num-badge">23</div>
+          <div class="parada-info">
+            <strong>COLCA BERROSPI ROQUE</strong>
+            <span>JR LOS OPALOS 1934 ASOC SAN HILARIO SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.99963,-77.00596" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(23)">
+          <div class="num-badge">24</div>
+          <div class="parada-info">
+            <strong>JUSCAMAYTA ALARCON JOSE ENRIQUE</strong>
+            <span>JR. LOS RUBIES 1900 URB. SAN HILARI SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.000485,-77.0052" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(24)">
+          <div class="num-badge">25</div>
+          <div class="parada-info">
+            <strong>CARRANZA DE ESTELA MARIA OLGA</strong>
+            <span>JR GRANITO 283 URB LAS FLORES SAN J SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.00203,-77.0058" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(25)">
+          <div class="num-badge">26</div>
+          <div class="parada-info">
+            <strong>GARCIA SALAZAR SOLI</strong>
+            <span>JR LAS LAJAS 350 URB LAS FLORES SAN SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.003482,-77.0034" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(26)">
+          <div class="num-badge">27</div>
+          <div class="parada-info">
+            <strong>SOLIS ALVAREZ CARMEN</strong>
+            <span>JR LAS GRAVAS 1754 SAN JUAN DE LURI SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.00436,-77.004506" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(27)">
+          <div class="num-badge">28</div>
+          <div class="parada-info">
+            <strong>SOBERON VIDARTE ESTHER</strong>
+            <span>JR LOS ZAFIROS 1734 URB LAS FLORES SAN J, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.00375,-77.00642" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(28)">
+          <div class="num-badge">29</div>
+          <div class="parada-info">
+            <strong>GALVEZ PEREZ DINA DOLORES</strong>
+            <span>JR ZAFIROS 1796 J 01 URB LAS FLORES SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.003149,-77.006698" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(29)">
+          <div class="num-badge">30</div>
+          <div class="parada-info">
+            <strong>MEJIA RODAS DE MACAVILCA MARIA ALIC</strong>
+            <span>JR ANEMONAS 1421 LAS FLORES DE LIMA SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.007297,-77.007491" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(30)">
+          <div class="num-badge">31</div>
+          <div class="parada-info">
+            <strong>ARRATIA HINOSTROZA MARILU</strong>
+            <span>JR BELLOTITAS 1115 URB LAS VIOLETAS SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.01038,-77.007555" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(31)">
+          <div class="num-badge">32</div>
+          <div class="parada-info">
+            <strong>GAMARRA CONDORI LUIS</strong>
+            <span>JR LAS ANEMONAS 900 SAN JUAN DE LUR SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.014485,-77.0111" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(32)">
+          <div class="num-badge">33</div>
+          <div class="parada-info">
+            <strong>CCORIMANYA QUISPE CRISTINA VERONICA</strong>
+            <span>JR LAS DROSERAS 367 SAN JUAN DE LURIGANC, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.011629,-77.007035" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(33)">
+          <div class="num-badge">34</div>
+          <div class="parada-info">
+            <strong>VEGA JULCARIMA SAMMY DEL ROSARIO</strong>
+            <span>CA. LAS DROSERAS 396 URB. LAS VIOLE SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.011498,-77.006834" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(34)">
+          <div class="num-badge">35</div>
+          <div class="parada-info">
+            <strong>GRIMALDO VARGAS ANGELICA</strong>
+            <span>JR BELLOTITAS 1027 URB LAS VIOLETAS SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.011911,-77.008318" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(35)">
+          <div class="num-badge">36</div>
+          <div class="parada-info">
+            <strong>SANCHEZ CHUQUILLANQUI TERESA</strong>
+            <span>JR BELLOTITAS MZ F LT 20 URB LAS VI SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.010914,-77.007743" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(36)">
+          <div class="num-badge">37</div>
+          <div class="parada-info">
+            <strong>CHIRINOS ORIHUELA EDITH LOURDES</strong>
+            <span>CL LOS HUERTOS 114A URB LAS FLORES SAN J, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.008136,-77.0053" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(37)">
+          <div class="num-badge">38</div>
+          <div class="parada-info">
+            <strong>AYALA ALATA ALDO ALEX</strong>
+            <span>JR LAS BELLOTITAS 1223 URB LAS VIOL SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.009551,-77.006319" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(38)">
+          <div class="num-badge">39</div>
+          <div class="parada-info">
+            <strong>GUTIERREZ PALOMINO MICHEL</strong>
+            <span>JR LAS BELLOTITAS 1172 SAN JUAN DE LURIG, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.00984,-77.006506" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(39)">
+          <div class="num-badge">40</div>
+          <div class="parada-info">
+            <strong>RIVERA GONZALES CARMEN ROSA</strong>
+            <span>CORALINAS 236 SAN JUAN DE LURIGANCHO, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.010106,-77.005562" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(40)">
+          <div class="num-badge">41</div>
+          <div class="parada-info">
+            <strong>ORE LIZARRAGA WILFREDO JULIO</strong>
+            <span>JR LAS CORALINAS 243 URB LOS JARDIN SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.010072,-77.004881" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(41)">
+          <div class="num-badge">42</div>
+          <div class="parada-info">
+            <strong>POSADAS DE CARHUANCHO NELLY NICOLAZ</strong>
+            <span>JR. LAS SENSITIVAS MZ I LOT 50 URB. SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.01052,-77.004817" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(42)">
+          <div class="num-badge">43</div>
+          <div class="parada-info">
+            <strong>FABIAN RIVERA MARILU NELLY</strong>
+            <span>CA LAS CORALINAS 323 URB LOS JARD SAN JU, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.010229,-77.00588" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(43)">
+          <div class="num-badge">44</div>
+          <div class="parada-info">
+            <strong>LEVANO ZUNIGA MIRIAM SOLEDAD</strong>
+            <span>PO LOS ARARISTOS 1392 MZ G LT 22 UR SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.010852,-77.005269" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(44)">
+          <div class="num-badge">45</div>
+          <div class="parada-info">
+            <strong>HUARANCCA TOLENTINO GERALDYNE NOEMI</strong>
+            <span>KIOSKO DENTRO DE WIRACOCHA SAN JUAN DE L, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.01062,-77.003366" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(45)">
+          <div class="num-badge">46</div>
+          <div class="parada-info">
+            <strong>POMA INGA BERNARDA</strong>
+            <span>AV LOS TUSILAGOS 170 URB LOS JARDIN SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.013148,-77.003568" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(46)">
+          <div class="num-badge">47</div>
+          <div class="parada-info">
+            <strong>LOPEZ VILLEGAS JOSE ANTONIO</strong>
+            <span>JR LOS RICINOS 1036 URB LOS JARDINE SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.0123,-77.0078" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(47)">
+          <div class="num-badge">48</div>
+          <div class="parada-info">
+            <strong>TOMAS TORRES YUDY ALCIRA</strong>
+            <span>AV LOS TUSILAGOS OESTE 318 318 SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.012599,-77.006661" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(48)">
+          <div class="num-badge">49</div>
+          <div class="parada-info">
+            <strong>RIOS RUIZ HAIDE YOLANDA</strong>
+            <span>CA ALOES MZ J LT 13 URB LOS JARDINE SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-12.011832,-77.003774" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div></div>
+</div>
+
+<script>
+  const paradas = [
+      {lat:-12.001036, lng:-77.006392, num:1, nombre:"ROJAS CASTRO ROSA ELVIRA", cod:"7200068957", dir:"JR LAS DRUSAS 298 URB LAS FLORES 78 SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.999983, lng:-77.008317, num:2, nombre:"FABIAN ANDRES CARMELITA", cod:"7200283726", dir:"URB SAN HILARION 2DA ETP JR AMATIST SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.998353, lng:-77.008, num:3, nombre:"COLONIA DIAZ EBER PAULINO", cod:"7200054459", dir:"JR LAS PERLAS 2000 URB LAS VIOLETAS SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.0029, lng:-77.003596, num:4, nombre:"VILA CONDEMAYTA JENY", cod:"7200043220", dir:"JR LOS RUBIES 1746 URB LAS FLORES SAN JU", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.002012, lng:-77.003807, num:5, nombre:"AROMA DEL PAN S.A.C.", cod:"7200296617", dir:"AV 13 DE ENERO 1793 SAN JUAN DE LURIGANC", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.002179, lng:-77.003328, num:6, nombre:"DIAZ RUBIO CESAR", cod:"7200043216", dir:"AV 13 DE ENERO 1774 SAN JUAN DE LUR SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.999675, lng:-77.002359, num:7, nombre:"SANTOS CARDENAS ELIZABETH NANCY", cod:"7200053917", dir:"PTO 62 MDO MANCO INCA SAN JUAN DE L SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.998398, lng:-77.003949, num:8, nombre:"HUALLPA GUTIERREZ YANET", cod:"7200053921", dir:"CL LAS BLENDAS 462 URB INCA MANCO C SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.998221, lng:-77.004645, num:9, nombre:"DE LA CRUZ GRADOS OLGA ESTHER", cod:"7200053893", dir:"LAS BLENDAS 429 INCA MANCO CAPAC SA SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.999664, lng:-77.00436, num:10, nombre:"QUICHUA QUISPE JANETH ROCIO", cod:"7200053913", dir:"JR EL TERRAZO 1936 ASOC MANCO CAPAC SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.003583, lng:-77.0025, num:11, nombre:"ALTEZ ROJAS MIRIAM", cod:"7200102140", dir:"AV 13 DE ENERO 1704 URBINCA MANCO C SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.001638, lng:-77.003035, num:12, nombre:"PAULINO CUBA ROSA BERTHA", cod:"7200118844", dir:"JR LOS TERRAZOS 1786 URB INCA MANCO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.002579, lng:-77.002601, num:13, nombre:"REYES BOBADILLA MANUEL", cod:"7200079526", dir:"JR LOS TERRAZOS 1733 URB INCA MANCO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.00108, lng:-77.002617, num:14, nombre:"HUARI CENTENO VALERIO CRISANTO", cod:"7200159923", dir:"CA LOS MINERALES 499 SAN JUAN DE LURIGAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.000786, lng:-77.003081, num:15, nombre:"RAMIREZ NAVARRO MIRIAN ROSA", cod:"7200053897", dir:"JR MARMOL 479 INCA MANCO CAPAC I ET SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.998709, lng:-77.002951, num:16, nombre:"HUALLPARIMACHI CJUMO JACQUELINE", cod:"7200207082", dir:"JR AMATISTAS 557 SAN JUAN DE LURIGANCHO", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.998225, lng:-77.003949, num:17, nombre:"GONZALES QUINONES JANET MABEL", cod:"7200109878", dir:"JR LA BLENDAS 461 URB INCA MANCO CA SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.997772, lng:-77.004149, num:18, nombre:"PANDO TORRES YESSICA RUTH", cod:"7200161317", dir:"JR LAS TURQUESAS 449 URB INCA MANCO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.997049, lng:-77.006596, num:19, nombre:"INVERSIONES HNOS QUINO S.A.C.", cod:"7200054465", dir:"JR LOS GRAFITOS 281 SAN JUAN DE LUR SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.997199, lng:-77.006788, num:20, nombre:"ULLOA GUERRA MISHEL ALEXANDRA", cod:"7200103100", dir:"JR LOS GRAFITOS 274 URB SAN HILARIO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.997025, lng:-77.008336, num:21, nombre:"ROJAS OSPINO LINDA JOCAVED", cod:"7200102063", dir:"AV LOS POSTES ESTE 164 URB SAN HILA SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.999407, lng:-77.0082, num:22, nombre:"MONTALVO VILLACA NANCY KARINA", cod:"7200054462", dir:"JR LOS ZAFIROS 2023 URB SAN HILARIO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.99963, lng:-77.00596, num:23, nombre:"COLCA BERROSPI ROQUE", cod:"7200054367", dir:"JR LOS OPALOS 1934 ASOC SAN HILARIO SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.000485, lng:-77.0052, num:24, nombre:"JUSCAMAYTA ALARCON JOSE ENRIQUE", cod:"7200054336", dir:"JR. LOS RUBIES 1900 URB. SAN HILARI SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.00203, lng:-77.0058, num:25, nombre:"CARRANZA DE ESTELA MARIA OLGA", cod:"7200054369", dir:"JR GRANITO 283 URB LAS FLORES SAN J SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.003482, lng:-77.0034, num:26, nombre:"GARCIA SALAZAR SOLI", cod:"7200043201", dir:"JR LAS LAJAS 350 URB LAS FLORES SAN SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.00436, lng:-77.004506, num:27, nombre:"SOLIS ALVAREZ CARMEN", cod:"7200043203", dir:"JR LAS GRAVAS 1754 SAN JUAN DE LURI SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.00375, lng:-77.00642, num:28, nombre:"SOBERON VIDARTE ESTHER", cod:"7200068959", dir:"JR LOS ZAFIROS 1734 URB LAS FLORES SAN J", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.003149, lng:-77.006698, num:29, nombre:"GALVEZ PEREZ DINA DOLORES", cod:"7200057470", dir:"JR ZAFIROS 1796 J 01 URB LAS FLORES SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.007297, lng:-77.007491, num:30, nombre:"MEJIA RODAS DE MACAVILCA MARIA ALIC", cod:"7200044111", dir:"JR ANEMONAS 1421 LAS FLORES DE LIMA SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.01038, lng:-77.007555, num:31, nombre:"ARRATIA HINOSTROZA MARILU", cod:"7200052178", dir:"JR BELLOTITAS 1115 URB LAS VIOLETAS SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.014485, lng:-77.0111, num:32, nombre:"GAMARRA CONDORI LUIS", cod:"7200045086", dir:"JR LAS ANEMONAS 900 SAN JUAN DE LUR SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.011629, lng:-77.007035, num:33, nombre:"CCORIMANYA QUISPE CRISTINA VERONICA", cod:"7200307769", dir:"JR LAS DROSERAS 367 SAN JUAN DE LURIGANC", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.011498, lng:-77.006834, num:34, nombre:"VEGA JULCARIMA SAMMY DEL ROSARIO", cod:"7200176723", dir:"CA. LAS DROSERAS 396 URB. LAS VIOLE SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.011911, lng:-77.008318, num:35, nombre:"GRIMALDO VARGAS ANGELICA", cod:"7200052214", dir:"JR BELLOTITAS 1027 URB LAS VIOLETAS SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.010914, lng:-77.007743, num:36, nombre:"SANCHEZ CHUQUILLANQUI TERESA", cod:"7200052198", dir:"JR BELLOTITAS MZ F LT 20 URB LAS VI SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.008136, lng:-77.0053, num:37, nombre:"CHIRINOS ORIHUELA EDITH LOURDES", cod:"7200044220", dir:"CL LOS HUERTOS 114A URB LAS FLORES SAN J", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.009551, lng:-77.006319, num:38, nombre:"AYALA ALATA ALDO ALEX", cod:"7200108540", dir:"JR LAS BELLOTITAS 1223 URB LAS VIOL SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.00984, lng:-77.006506, num:39, nombre:"GUTIERREZ PALOMINO MICHEL", cod:"7200284129", dir:"JR LAS BELLOTITAS 1172 SAN JUAN DE LURIG", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.010106, lng:-77.005562, num:40, nombre:"RIVERA GONZALES CARMEN ROSA", cod:"7200284251", dir:"CORALINAS 236 SAN JUAN DE LURIGANCHO", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.010072, lng:-77.004881, num:41, nombre:"ORE LIZARRAGA WILFREDO JULIO", cod:"7200253380", dir:"JR LAS CORALINAS 243 URB LOS JARDIN SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.01052, lng:-77.004817, num:42, nombre:"POSADAS DE CARHUANCHO NELLY NICOLAZ", cod:"7200227378", dir:"JR. LAS SENSITIVAS MZ I LOT 50 URB. SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.010229, lng:-77.00588, num:43, nombre:"FABIAN RIVERA MARILU NELLY", cod:"7200176228", dir:"CA LAS CORALINAS 323 URB LOS JARD SAN JU", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.010852, lng:-77.005269, num:44, nombre:"LEVANO ZUNIGA MIRIAM SOLEDAD", cod:"7200044208", dir:"PO LOS ARARISTOS 1392 MZ G LT 22 UR SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.01062, lng:-77.003366, num:45, nombre:"HUARANCCA TOLENTINO GERALDYNE NOEMI", cod:"7200274670", dir:"KIOSKO DENTRO DE WIRACOCHA SAN JUAN DE L", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.013148, lng:-77.003568, num:46, nombre:"POMA INGA BERNARDA", cod:"7200044222", dir:"AV LOS TUSILAGOS 170 URB LOS JARDIN SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.0123, lng:-77.0078, num:47, nombre:"LOPEZ VILLEGAS JOSE ANTONIO", cod:"7200052187", dir:"JR LOS RICINOS 1036 URB LOS JARDINE SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.012599, lng:-77.006661, num:48, nombre:"TOMAS TORRES YUDY ALCIRA", cod:"7200209250", dir:"AV LOS TUSILAGOS OESTE 318 318 SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-12.011832, lng:-77.003774, num:49, nombre:"RIOS RUIZ HAIDE YOLANDA", cod:"7200257551", dir:"CA ALOES MZ J LT 13 URB LOS JARDINE SAN", distrito:"SAN JUAN DE LURIGANCHO"}
+  ];
+
+  let map, markers = [], infoWindow;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: { lat: -12.00474036734694, lng: -77.00545548979593 },
+      mapTypeControl: false,
+      streetViewControl: false,
+    });
+
+    infoWindow = new google.maps.InfoWindow();
+    const bounds = new google.maps.LatLngBounds();
+
+    paradas.forEach((p, i) => {
+      const pos = { lat: p.lat, lng: p.lng };
+      bounds.extend(pos);
+
+      const marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        label: { text: String(p.num), color: "#fff", fontWeight: "700", fontSize: "13px" },
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "#1a73e8",
+          fillOpacity: 1,
+          strokeColor: "#ffffff",
+          strokeWeight: 2,
+          scale: 14,
+        },
+      });
+
+      marker.addListener("click", () => {
+        infoWindow.setContent(
+          `<div style="font-family:Arial;max-width:220px">
+             <strong>${p.num}. ${p.nombre}</strong><br/>
+             <span style="font-size:12px;color:#555">${p.dir}, ${p.distrito}</span><br/>
+             <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}"
+                target="_blank" style="font-size:12px">Cómo llegar →</a>
+           </div>`
+        );
+        infoWindow.open(map, marker);
+      });
+
+      markers.push(marker);
+    });
+
+    map.fitBounds(bounds);
+  }
+
+  function centrarEnParada(i) {
+    map.panTo(markers[i].getPosition());
+    map.setZoom(16);
+    google.maps.event.trigger(markers[i], "click");
+  }
+
+  window.initMap = initMap;
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgKdPPLn0UlClWQQLQymLSOCCNTTu3qq4&callback=initMap">
+</script>
+
+</body>
+</html>
