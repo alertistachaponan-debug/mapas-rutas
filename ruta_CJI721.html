@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta CJI721 — 22 paradas</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, Roboto, Arial, sans-serif; }
+  body { display:flex; flex-direction:column; height:100vh; }
+  header {
+    background:#1a73e8; color:#fff; padding:14px 18px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;
+  }
+  header h1 { font-size:17px; font-weight:600; }
+  header span { font-size:13px; opacity:0.9; }
+  #container { display:flex; flex:1; min-height:0; }
+  #map { flex:1; min-width:0; }
+  #sidebar {
+    width:340px; max-width:40vw; overflow-y:auto; background:#fafafa;
+    border-left:1px solid #e0e0e0;
+  }
+  .parada {
+    display:flex; align-items:center; gap:10px; padding:12px 14px;
+    border-bottom:1px solid #eee; cursor:pointer; transition:background .15s;
+  }
+  .parada:hover { background:#eef3ff; }
+  .num-badge {
+    width:28px; height:28px; border-radius:50%; background:#1a73e8; color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;
+    flex-shrink:0;
+  }
+  .parada-info { flex:1; display:flex; flex-direction:column; min-width:0; }
+  .parada-info strong { font-size:13.5px; color:#202124; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .parada-info span { font-size:12px; color:#5f6368; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .btn-ir {
+    background:#1a73e8; color:#fff; text-decoration:none; font-size:12px;
+    padding:6px 10px; border-radius:5px; flex-shrink:0; font-weight:600;
+  }
+  @media (max-width: 700px) {
+    #container { flex-direction:column; }
+    #sidebar { width:100%; max-width:100%; max-height:35vh; }
+    #map { flex:1; min-height:40vh; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚚 Ruta — Placa CJI721</h1>
+  <span>22 paradas · Gestor: V10</span>
+</header>
+
+<div id="container">
+  <div id="map"></div>
+  <div id="sidebar">
+        <div class="parada" onclick="centrarEnParada(0)">
+          <div class="num-badge">1</div>
+          <div class="parada-info">
+            <strong>QUISPE LUQUE EUGENIA</strong>
+            <span>MZ A LT 18 AAHH CRUZ DE MOTUPE SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943153,-76.976911" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(1)">
+          <div class="num-badge">2</div>
+          <div class="parada-info">
+            <strong>ESPINOZA DEPAZ DENIS NORIS</strong>
+            <span>MCDO HUGO CERVANTES MINAYA PUESTO B SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.925749,-76.959541" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(2)">
+          <div class="num-badge">3</div>
+          <div class="parada-info">
+            <strong>OSORES LIZARBE JUAN VICTOR</strong>
+            <span>PTO F8 MDO HUGO CERVANTES MINAYA SAN JUA, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.926966,-76.96114" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(3)">
+          <div class="num-badge">4</div>
+          <div class="parada-info">
+            <strong>LIZARBE AQUISE DANIEL FELIPE</strong>
+            <span>PTO 26 MDO JOSE CARLOS MARIATEGUI S SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.93961,-76.989259" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(4)">
+          <div class="num-badge">5</div>
+          <div class="parada-info">
+            <strong>VELASQUEZ QUEZADA BLANCA AURORA</strong>
+            <span>MZ S11 LT 10 URB MARISCAL CACERES S SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.94347,-76.980611" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(5)">
+          <div class="num-badge">6</div>
+          <div class="parada-info">
+            <strong>CRUZ VILLALOBOS DAVIS EDWARD</strong>
+            <span>JR FINAL MZ K10 LT 07 AAHH E SAN JUAN DE, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942722,-76.980566" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(6)">
+          <div class="num-badge">7</div>
+          <div class="parada-info">
+            <strong>CAJALEON CABRERA DIOMEDES MUSSOLINI</strong>
+            <span>MZ S17 LT 16 URB MARISCAL CACERES S SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942393,-76.980411" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(7)">
+          <div class="num-badge">8</div>
+          <div class="parada-info">
+            <strong>SALCEDO ESPINOZA ELIAS</strong>
+            <span>MZ S16 LT 20 URB MARISCAL CACERES S SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942374,-76.979692" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(8)">
+          <div class="num-badge">9</div>
+          <div class="parada-info">
+            <strong>ONCOY YANAC MARCELINA HILDA</strong>
+            <span>MZ S13 LT 19 URB MARISCAL CACERES S SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943326,-76.980107" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(9)">
+          <div class="num-badge">10</div>
+          <div class="parada-info">
+            <strong>SALAZAR VILLANUEVA MARIBEL RITA</strong>
+            <span>S12 LT 14 CACERES SAN JUAN DE LURIGANCHO, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943495,-76.980107" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(10)">
+          <div class="num-badge">11</div>
+          <div class="parada-info">
+            <strong>CURIOSO TORRES MERLY JUANA</strong>
+            <span>MZ S7 LT 11 MARISCAL CACERES SAN JUAN DE, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943935,-76.979262" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(11)">
+          <div class="num-badge">12</div>
+          <div class="parada-info">
+            <strong>MOGOLLON RAMOS ZORAIDA REBECA</strong>
+            <span>URB. MARISCAL ANDRES A.CACE MZ T13 SAN J, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.944213,-76.978865" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(12)">
+          <div class="num-badge">13</div>
+          <div class="parada-info">
+            <strong>MACHA QUISPE EPIFANIA</strong>
+            <span>JR INTERMEDIO MZ T 1 LT 01 URB MARI SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942913,-76.978257" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(13)">
+          <div class="num-badge">14</div>
+          <div class="parada-info">
+            <strong>DELGADO ORDOÑEZ SEGUNDO ALFONSO</strong>
+            <span>MZ S3 LT11 MARISCAL CACERES SAN JUAN DE, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942773,-76.978633" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(14)">
+          <div class="num-badge">15</div>
+          <div class="parada-info">
+            <strong>ROMAN GARCIA MARISA FORTUNATA</strong>
+            <span>MZ A SE LOTE 6 MARISCAL CACERES SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942612,-76.978769" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(15)">
+          <div class="num-badge">16</div>
+          <div class="parada-info">
+            <strong>RAMOS SUAZO MELETINA VICENTA</strong>
+            <span>JR FINAL T1 4 URB MARISCAL CACERES SAN J, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942627,-76.978116" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(16)">
+          <div class="num-badge">17</div>
+          <div class="parada-info">
+            <strong>PONGO VILA NANCY TANIA</strong>
+            <span>MZ A LT 2 GRUPO 2 MOTUPE SAN JUAN DE LUR, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942384,-76.977942" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(17)">
+          <div class="num-badge">18</div>
+          <div class="parada-info">
+            <strong>CARRASCO CORREA ALEJANDRINA</strong>
+            <span>MZ A LT 30 GPO 2 CRUZ DE MOTUPE SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.942858,-76.977745" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(18)">
+          <div class="num-badge">19</div>
+          <div class="parada-info">
+            <strong>VALDIVIA CRUZ ROSA FLOR</strong>
+            <span>JR GENERAL ARENALES MZ T16 LT 10 UR SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943217,-76.977909" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(19)">
+          <div class="num-badge">20</div>
+          <div class="parada-info">
+            <strong>HUASCO GARRIAZO REGINA</strong>
+            <span>MZ T15 LT 23  MARISCAL CACERES SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.944075,-76.977667" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(20)">
+          <div class="num-badge">21</div>
+          <div class="parada-info">
+            <strong>CONDOR CAPARACHIN</strong>
+            <span>CALLE NICOLAS AYLLON MZ T4 LOT SAN JUAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943944,-76.977476" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div>
+        <div class="parada" onclick="centrarEnParada(21)">
+          <div class="num-badge">22</div>
+          <div class="parada-info">
+            <strong>PACHECO AGUILAR GLADYS DORIS</strong>
+            <span>JR FINAL MZ T1 LT 17 URB MARISCAL C SAN, SAN JUAN DE LURIGANCHO</span>
+          </div>
+          <a class="btn-ir" href="https://www.google.com/maps/dir/?api=1&destination=-11.943137,-76.977337" target="_blank" onclick="event.stopPropagation()">Ir</a>
+        </div></div>
+</div>
+
+<script>
+  const paradas = [
+      {lat:-11.943153, lng:-76.976911, num:1, nombre:"QUISPE LUQUE EUGENIA", cod:"7200310947", dir:"MZ A LT 18 AAHH CRUZ DE MOTUPE SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.925749, lng:-76.959541, num:2, nombre:"ESPINOZA DEPAZ DENIS NORIS", cod:"7200275258", dir:"MCDO HUGO CERVANTES MINAYA PUESTO B SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.926966, lng:-76.96114, num:3, nombre:"OSORES LIZARBE JUAN VICTOR", cod:"7200059490", dir:"PTO F8 MDO HUGO CERVANTES MINAYA SAN JUA", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.93961, lng:-76.989259, num:4, nombre:"LIZARBE AQUISE DANIEL FELIPE", cod:"7200044674", dir:"PTO 26 MDO JOSE CARLOS MARIATEGUI S SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.94347, lng:-76.980611, num:5, nombre:"VELASQUEZ QUEZADA BLANCA AURORA", cod:"7200043827", dir:"MZ S11 LT 10 URB MARISCAL CACERES S SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942722, lng:-76.980566, num:6, nombre:"CRUZ VILLALOBOS DAVIS EDWARD", cod:"7200212298", dir:"JR FINAL MZ K10 LT 07 AAHH E SAN JUAN DE", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942393, lng:-76.980411, num:7, nombre:"CAJALEON CABRERA DIOMEDES MUSSOLINI", cod:"7200043818", dir:"MZ S17 LT 16 URB MARISCAL CACERES S SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942374, lng:-76.979692, num:8, nombre:"SALCEDO ESPINOZA ELIAS", cod:"7200043807", dir:"MZ S16 LT 20 URB MARISCAL CACERES S SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943326, lng:-76.980107, num:9, nombre:"ONCOY YANAC MARCELINA HILDA", cod:"7200043824", dir:"MZ S13 LT 19 URB MARISCAL CACERES S SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943495, lng:-76.980107, num:10, nombre:"SALAZAR VILLANUEVA MARIBEL RITA", cod:"7200091468", dir:"S12 LT 14 CACERES SAN JUAN DE LURIGANCHO", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943935, lng:-76.979262, num:11, nombre:"CURIOSO TORRES MERLY JUANA", cod:"7200059436", dir:"MZ S7 LT 11 MARISCAL CACERES SAN JUAN DE", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.944213, lng:-76.978865, num:12, nombre:"MOGOLLON RAMOS ZORAIDA REBECA", cod:"7200205034", dir:"URB. MARISCAL ANDRES A.CACE MZ T13 SAN J", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942913, lng:-76.978257, num:13, nombre:"MACHA QUISPE EPIFANIA", cod:"7200043932", dir:"JR INTERMEDIO MZ T 1 LT 01 URB MARI SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942773, lng:-76.978633, num:14, nombre:"DELGADO ORDOÑEZ SEGUNDO ALFONSO", cod:"7200110199", dir:"MZ S3 LT11 MARISCAL CACERES SAN JUAN DE", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942612, lng:-76.978769, num:15, nombre:"ROMAN GARCIA MARISA FORTUNATA", cod:"7200310167", dir:"MZ A SE LOTE 6 MARISCAL CACERES SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942627, lng:-76.978116, num:16, nombre:"RAMOS SUAZO MELETINA VICENTA", cod:"7200043823", dir:"JR FINAL T1 4 URB MARISCAL CACERES SAN J", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942384, lng:-76.977942, num:17, nombre:"PONGO VILA NANCY TANIA", cod:"7200164068", dir:"MZ A LT 2 GRUPO 2 MOTUPE SAN JUAN DE LUR", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.942858, lng:-76.977745, num:18, nombre:"CARRASCO CORREA ALEJANDRINA", cod:"7200043929", dir:"MZ A LT 30 GPO 2 CRUZ DE MOTUPE SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943217, lng:-76.977909, num:19, nombre:"VALDIVIA CRUZ ROSA FLOR", cod:"7200043940", dir:"JR GENERAL ARENALES MZ T16 LT 10 UR SAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.944075, lng:-76.977667, num:20, nombre:"HUASCO GARRIAZO REGINA", cod:"7200295696", dir:"MZ T15 LT 23  MARISCAL CACERES SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943944, lng:-76.977476, num:21, nombre:"CONDOR CAPARACHIN", cod:"7200265606", dir:"CALLE NICOLAS AYLLON MZ T4 LOT SAN JUAN", distrito:"SAN JUAN DE LURIGANCHO"},
+      {lat:-11.943137, lng:-76.977337, num:22, nombre:"PACHECO AGUILAR GLADYS DORIS", cod:"7200043939", dir:"JR FINAL MZ T1 LT 17 URB MARISCAL C SAN", distrito:"SAN JUAN DE LURIGANCHO"}
+  ];
+
+  let map, markers = [], infoWindow;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: { lat: -11.941452090909088, lng: -76.97756013636364 },
+      mapTypeControl: false,
+      streetViewControl: false,
+    });
+
+    infoWindow = new google.maps.InfoWindow();
+    const bounds = new google.maps.LatLngBounds();
+
+    paradas.forEach((p, i) => {
+      const pos = { lat: p.lat, lng: p.lng };
+      bounds.extend(pos);
+
+      const marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        label: { text: String(p.num), color: "#fff", fontWeight: "700", fontSize: "13px" },
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "#1a73e8",
+          fillOpacity: 1,
+          strokeColor: "#ffffff",
+          strokeWeight: 2,
+          scale: 14,
+        },
+      });
+
+      marker.addListener("click", () => {
+        infoWindow.setContent(
+          `<div style="font-family:Arial;max-width:220px">
+             <strong>${p.num}. ${p.nombre}</strong><br/>
+             <span style="font-size:12px;color:#555">${p.dir}, ${p.distrito}</span><br/>
+             <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}"
+                target="_blank" style="font-size:12px">Cómo llegar →</a>
+           </div>`
+        );
+        infoWindow.open(map, marker);
+      });
+
+      markers.push(marker);
+    });
+
+    map.fitBounds(bounds);
+  }
+
+  function centrarEnParada(i) {
+    map.panTo(markers[i].getPosition());
+    map.setZoom(16);
+    google.maps.event.trigger(markers[i], "click");
+  }
+
+  window.initMap = initMap;
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgKdPPLn0UlClWQQLQymLSOCCNTTu3qq4&callback=initMap">
+</script>
+
+</body>
+</html>
